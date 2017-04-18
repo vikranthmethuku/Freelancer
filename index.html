@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Task Tracker</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <style type="text/css">
+    	#leftSection {
+    		border-right : solid #F0F0F0;
+    		border-width: 7px;
+    	}
+
+
+    	table {
+    		border-collapse:separate;
+		    border-radius:10px;
+		    -moz-border-radius:10px;
+    		border : solid #F0F0F0;
+    		border-width: 5px;
+    	}
+
+    	td {
+		    padding: 7px;
+		}
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+</head>
+
+<body class="container-fluid">
+	<div class="jumbotron">
+	    <h1>Task Tracker</h1>
+	    <p>v2.0</p> 
+	</div>
+	<div class="row">
+		<section class="col-md-6" id="leftSection">
+			<h2>Create a Task</h2>
+			
+			<label for="taskName" >Task Name</label><br>
+			<input type="text" class="form-control" style = "background-color: #F0F0F0;" name="taskName" id="taskName" required><br>
+			<label for="date">Date</label><br>
+			<input type="date" class="form-control" style = "background-color: #F0F0F0;" name="date" id="date" required><br>
+			<label for="assignedTo">Assigned To</label><br>
+			<input type="text" class="form-control" style = "background-color: #F0F0F0;" name="assignedTo" id="assignedTo" required><br>
+			<button type="submit" class="btn btn-primary" "background-color: #FFFFFF;" id="submitClickButton" > Submit </button>
+			
+		</section>
+		<section class="col-md-6">
+			<h2>Existing Tasks</h2>
+			<table id="tableId" cellpadding="20">
+			</table>
+		</section>
+	</div>
+	<script type="text/javascript">
+	var data= 	[
+					{"name": "Test Task #1", "date": "12/01/2012", "assigned": "John Doe" },
+					{"name": "Test Task #2", "date": "12/02/2012", "assigned": "John Doe" },
+					{"name": "Test Task #3", "date": "12/03/2012", "assigned": "John Doe" },
+					{"name": "Test Task #4", "date": "12/04/2012", "assigned": "John Doe" },
+					{"name": "Test Task #5", "date": "12/05/2012", "assigned": "John Doe" },
+					{"name": "Test Task #6", "date": "12/06/2012", "assigned": "John Doe" },
+					{"name": "Test Task #7", "date": "12/07/2012", "assigned": "John Doe" }
+				];
+	$( document ).ready( function() {
+		reconstructTable ();
+		$('#submitClickButton').click(
+			function() {
+				if(!($("input").filter(function () {return $.trim($(this).val()).length > 0}).length == 0)) {
+					// temp variable to push into data array of task tracker
+					var temp ={};
+					// collecting the values
+					temp.name= $('#taskName').val();
+					temp.date= $('#date').val();
+					temp.assigned = $('#assignedTo').val();
+					data.unshift(temp);
+					reconstructTable ();
+
+				}
+			});
+	});
+
+
+	function reconstructTable () {
+		var tableContent ='';
+			for(var i=0; i<data.length ; i++) {
+				tableContent = tableContent + '<tr>'+ '<td> <strong>' +data[i].name+ '</strong></td>'  +'<td>' +data[i].date+ '</td>'+ '<td><strong>' +data[i].assigned+ '</strong></td>'+ '</tr>';
+			}
+			document.getElementById('tableId').innerHTML=tableContent;
+			$('tr:odd').css('background-color', ' #F0F0F0');
+	}
+	</script>
+</body>
+
+</html>
